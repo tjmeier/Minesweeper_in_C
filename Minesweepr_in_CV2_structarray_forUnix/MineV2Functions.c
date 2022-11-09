@@ -252,7 +252,10 @@ void initializeBoard(struct Square Board[MAXHEIGHT][MAXLENGTH] /*defined in Head
 }
 
 void placeBombs(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int length, unsigned int height, unsigned int qty_bombs) {
+	time_t t;
 	unsigned int current_bomb, rand_i, rand_j;
+
+	srand((unsigned int)time(&t)); //seeds rand() function with the time
 
 	//Repeats for the quantity of bombs
 
