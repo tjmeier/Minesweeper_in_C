@@ -39,6 +39,7 @@ void getUserMove(unsigned int* row, unsigned int* col, unsigned int* flag_reveal
 unsigned int getPlayAgain(void);
 
 unsigned int revealNeighbors(struct Square* revealMyNeighbors);
+void revealAllBombs(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int length, unsigned int height);
 
 
 #endif
