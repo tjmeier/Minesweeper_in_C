@@ -290,7 +290,7 @@ void getQtyNearbyBombs(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int l
 }
 
 unsigned int updateGameState(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int length, unsigned int height, unsigned int qty_bombs) {
-	unsigned int i, j, correct_flags = 0, incorrect_flags = 0;
+	unsigned int i, j, correct_flags = 0, incorrect_flags = 0, return_value = 0;
 	struct Square* p_current_Square;
 
 	for (i = 0; i < height; i++) {
@@ -310,7 +310,7 @@ unsigned int updateGameState(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned
 			else if (Board[i][j].is_revealed) {
 				if (Board[i][j].has_bomb) {
 					Board[i][j].symbol = 'B'; //Revealed squares with a bomb show a B
-					return 2; //Lose Condition
+					return_value = 2; //Lose Condition
 				}
 				else if (Board[i][j].qty_nearby_bombs > 0)
 					Board[i][j].symbol = (char)(Board[i][j].qty_nearby_bombs + ASCIIDECIMALCHAROFFSET); //Revealed squares with a number will be that number
@@ -326,9 +326,9 @@ unsigned int updateGameState(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned
 
 
 	if (correct_flags == qty_bombs && incorrect_flags == 0)
-		return 1; //Win Condition
-	else
-		return 0; //Continue Condition
+		return_value = 1; //Win Condition
+
+	return return_value;
 }
 
 void expandZeroSquares(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int length, unsigned int height){
@@ -442,4 +442,20 @@ unsigned int revealNeighbors(struct Square* reveal_my_neighbors) {
 	}
 
 	return is_any_neighbor_an_unrevealed_0;
+}
+
+void revealAllBombs(struct Square Board[MAXHEIGHT][MAXLENGTH], unsigned int length, unsigned int height) {
+	unsigned int i, j;
+	struct Square* p_current_Square;
+
+	for (i = 0; i < height; i++) {
+		p_current_Square = &Board[i][0];
+		for (j = 0; j < length; j++) {
+			if (p_current_Square->has_bomb == 1) //checks every Square in the Board, any Square with a bomb will be revealed
+				p_current_Square->is_revealed = 1;
+
+			p_current_Square++;
+		}
+	}
+
 }

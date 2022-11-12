@@ -79,12 +79,19 @@ int main(void) {
 			expandZeroSquares(GameBoard, board_length, board_height);
 			win = updateGameState(GameBoard, board_length, board_height, qty_bombs);
 
-			if (win == 2) {
+			if (win == 2) { //If the user hit a bomb
 				printf("Boom! You lose.");
+				revealAllBombs(GameBoard, board_length, board_height); //reveals all the bomb locations and shows the user the final board
+
+				updateGameState(GameBoard, board_length, board_height, qty_bombs);
+				printBoard(GameBoard, &board_length, &board_height);
 				done = 1;
 			}
-			else if (win == 1) {
+			else if (win == 1) { //If the user correctly flagged every bomb
 				printf("You correctly flagged all %u bombs!", qty_bombs);
+
+				updateGameState(GameBoard, board_length, board_height, qty_bombs);
+				printBoard(GameBoard, &board_length, &board_height); //shows the user the final board
 				done = 1;
 			}
 
