@@ -34,22 +34,27 @@ void getBoardSize(unsigned int* length, unsigned int* height) {
 void getUserMove(unsigned int* row, unsigned int* col, unsigned int* flag_reveal, unsigned int length, unsigned int height) {
 	
 	//------ Asks user for Reveal / Flag selection ------
-	char flag_reveal_input;
-	printf("For reveal enter 'r' and for flag enter 'f' ");
-	flag_reveal_input = getchar();
+	char char1, char2, repeat = 1;
+	
+	printf("Reveal or Flag");
+	char1 = getchar();
+	char2 = getchar();
+	if ((char1 == 'f' || char1 == 'r') && char2 == '\n')
+		repeat = 0;
+	else if (char2 != '\n') //if for some reason the user inputs multiple characters, cycles through them until the next line
+		while (getchar() != '\n');
 
-	//column out of range condition
-	while (flag_reveal_input != 'r' && flag_reveal_input != 'f')  {
-		printf("\nReveal or Flag: ");
-		flag_reveal_input = getchar();
+	printf("Try again. Please enter exactly 'r' or 'f': ");
+	while (repeat) {
+		char1 = getchar();
+		char2 = getchar();
+		if ((char1 == 'f' || char1 == 'r') && char2 == '\n')
+			repeat = 0;
+		else if (char2 != '\n')
+			while (getchar() != '\n');
 	}
 
-	if (flag_reveal_input == 'f')
-		*flag_reveal = 0;
-	else if (flag_reveal_input == 'r')
-		*flag_reveal = 1;
-
-
+	
 	
 	//------ Asks user for Row Selection ------
 	printf("\nRow: ");
@@ -95,12 +100,16 @@ void getQtyBombs(unsigned int maximum_bombs, unsigned int* qty_bombs) {
 
 unsigned int getPlayAgain(void) {
 	char play_again;
-	printf("\nWould you like to play again? Enter 'y' for yes or 'n' for no");
+	printf("\nWould you like to play again? y or n: ");
 	play_again = getchar();
 
 	while (play_again != 'y' && play_again != 'n') {
-		printf("\nWould you like to play again?: ");
-		play_again = getchar();
+		if (getchar() == '\n') { //used to clear through all junk entries, and will prompt the user once it hits the new line
+			printf("\nTry again, please enter exactly 'y' or 'n': ");
+			play_again = getchar();
+			if (getchar() != '\n') //makes sure that what is read in is a 'y' or a 'n' immediately followed by a next line
+				play_again = '\n'; //when that is not the case, sets play_again to an arbitrary character so the while loop will continue
+		}
 	}
 	if (play_again == 'y')
 		return 1;
