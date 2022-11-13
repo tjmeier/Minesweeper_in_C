@@ -36,12 +36,12 @@ void getUserMove(unsigned int* row, unsigned int* col, unsigned int* flag_reveal
 	//------ Asks user for Reveal / Flag selection ------
 	char flag_reveal_input;
 	printf("For reveal enter 'r' and for flag enter 'f' ");
-	scanf("%c", &flag_reveal_input);
+	flag_reveal_input = getchar();
 
 	//column out of range condition
 	while (flag_reveal_input != 'r' && flag_reveal_input != 'f')  {
 		printf("\nReveal or Flag: ");
-		scanf("%c", &flag_reveal_input);
+		flag_reveal_input = getchar();
 	}
 
 	if (flag_reveal_input == 'f')
@@ -96,11 +96,11 @@ void getQtyBombs(unsigned int maximum_bombs, unsigned int* qty_bombs) {
 unsigned int getPlayAgain(void) {
 	char play_again;
 	printf("\nWould you like to play again? Enter 'y' for yes or 'n' for no");
-	scanf("%c", &play_again, 1);
+	play_again = getchar();
 
 	while (play_again != 'y' && play_again != 'n') {
 		printf("\nWould you like to play again?: ");
-		scanf("%c", &play_again, 1);
+		play_again = getchar();
 	}
 	if (play_again == 'y')
 		return 1;
